@@ -1,0 +1,5 @@
+#+TITLE: Decision Tree Pipeline Deployment
+#+AUTHOR: João Lucas Correia Barbosa de Farias
+#+EMAIL: joao.farias.080@ufrn.edu.br
+
+* Deployment of a full decision tree pipeline
