@@ -3,3 +3,38 @@
 #+EMAIL: joao.farias.080@ufrn.edu.br
 
 * Deployment of a full decision tree pipeline
+
+
+* Pytest Errors
+pytest was throwing the following error when I tried to run:
+
+#+begin_src shell
+
+  pytest source/local_testing -vv -s
+
+#+end_src
+
+The error:
+
+______________ ERROR collecting source/local_testing/test_main.py ______________
+ImportError while importing test module '/[path-up-to]/decision-tree-pipeline/source/local_testing/test_main.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/anaconda3/envs/colab2deploy/lib/python3.8/importlib/__init__.py:127: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+../../../../../../[path-up-to]/decision-tree-pipeline/source/local_testing/test_main.py:3: in <module>
+    from source.query.main import app
+E   ModuleNotFoundError: No module named 'source'
+
+It turns out this happens because 'sys.path' cannot find the rootdir and thus is not able to find the module. There is a fix for this which consists of configuring the pythonpath variable like so:
+
+#+begin_src shell
+
+  [pytest]
+  pythonpath = .
+
+#+end_src
+
+But I do not know where to put this configuration setting. Instead, I went with the solution of simply adding an empty 'conftest.py' file in my rootdir. This makes pytest recognize my rootdir as part of 'sys.path'. This way, pytest is now able to find the module.
+
+Source: [[https://stackoverflow.com/questions/49028611/pytest-cannot-find-module][python - pytest cannot find module - Stack Overflow]]
